@@ -4,10 +4,10 @@
     <stackLayout>
       {#each items as item}
           <flexboxLayout class="product">
-            <image src={item.fields.image} stretch="aspectFit"/>
             <stackLayout>
-              <label class="h1" text={item.fields.tittle}/>
-              <label class="body" text={item.fields.price}$/>
+              <label class="h1" text={item.fields.teamName}/>
+              <label class="h1" text={item.fields.W}/>
+              <label class="h1" text={item.fields.L}/>
             </stackLayout>
           </flexboxLayout>
           {:else}
@@ -22,7 +22,7 @@
     import FirestoreParser from "firestore-parser"
     let items = []
     const baseUrl = "https://firestore.googleapis.com/v1/"
-    const productsUrl = baseUrl + "projects/sveklte-native-rest/databases/(default)/documents/products"
+    const productsUrl = baseUrl + "projects/my-first-firestore-proje-9c783/databases/(default)/documents/nba-data"
 
     const getProducts = () => {
         fetch(productsUrl)
