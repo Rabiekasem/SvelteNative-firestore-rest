@@ -1,24 +1,43 @@
 <page>
-    <actionBar title="Svelte Native App" />
-    <gridLayout>
-        <label class="info" horizontalAlignment="center" verticalAlignment="center" textWrap="true">
-            <formattedString>
-                <span class="fas" text="&#xf135;" />
-                <span text=" {message}" />
-            </formattedString>
-        </label>
-    </gridLayout>
+    <actionBar title="Svelte firebase rest" />
+    <scrollView class="main">
+    <stackLayout>
+      {#each items as item}
+          <flexboxLayout class="product">
+            <image src={item.fields.image} stretch="aspectFit"/>
+            <stackLayout>
+              <label class="h1" text={item.fields.tittle}/>
+              <label class="body" text={item.fields.price}$/>
+            </stackLayout>
+          </flexboxLayout>
+          {:else}
+          <activityIndicator busy={true}/>
+      {/each}
+    </stackLayout>
+    </scrollView>
+   
 </page>
 
 <script>
-    let message = "Blank Svelte Native App"
+    import FirestoreParser from "firestore-parser"
+    let items = []
+    const baseUrl = "https://firestore.googleapis.com/v1/"
+    const productsUrl = baseUrl + "projects/sveklte-native-rest/databases/(default)/documents/products"
+
+    const getProducts = () => {
+        fetch(productsUrl)
+        .then(response => response.json())
+          .then(json => FirestoreParser(json))
+            .then(parsed =>{
+                items = parsed.documents
+                console.log(items)
+             } )
+        .catch(error => console.lgo(error))  
+    }
+
+    getProducts()
 </script>
 
 <style>
-    .info .fas {
-        color: #3A53FF;
-    }
-    .info {
-        font-size: 20;
-    }
+ 
 </style>
